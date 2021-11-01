@@ -57,6 +57,6 @@ module.exports = {
 			"You may have to 'metaphorically' make a deal with the 'devil.' And by 'devil,' I mean Robot Devil. And by 'metaphorically,' I mean get your coat.",
 			'Your best is an idiot!'
 		];
-		await interaction.reply(quotes[Math.floor(Math.random() * quotes.length))]);	
+		await interaction.reply(quotes[Math.floor(Math.random() * quotes.length)]);	
 	}
 }
