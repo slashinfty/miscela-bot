@@ -7,7 +7,7 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
 client.commands = new Collection();
 const commandFiles = require('fs').readdirSync(require('path').resolve(__dirname, './commands')).filter(file => file.endsWith('.js'));
-for (const file of commandFiles) client.commands.set(command.data.name, require(`./commands/${file}`));
+for (const file of commandFiles) client.commands.set(require(`./commands/${file}`).data.name, require(`./commands/${file}`));
 
 client.once('ready', () => {
 	console.log(`Miscela Bot is live @ ${new Date().toTimeString()} on ${new Date().toDateString()}`);
