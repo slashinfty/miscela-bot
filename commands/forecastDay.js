@@ -7,7 +7,7 @@ module.exports = {
 		.setDescription('Current forecast for a given day of the week')
 		.addStringOption(option => option.setName('day').setDescription('Enter a day of the week, or leave blank for today'))
 	,async execute(interaction) {
-		const day = interaction.options.getString('forecast').toLowerCase();
+		const day = interaction.options.getString('day').toLowerCase();
 		const res = await fetch('https://api.weather.gov/gridpoints/LWX/110,94/forecast');
 		const data = await res.json();
 		const periods = data.properties.periods;
