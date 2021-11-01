@@ -2,9 +2,9 @@ const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 
 const dotenv = require('dotenv');
-dotenv.config();
+dotenv.config({ path: require('path').resolve(__dirname, './.env') });
 
-const commands = require('fs').readdirSync('./commands').filter(file => file.endsWith('.js')).map(file => require(`./commands/${file}`).data.toJSON());
+const commands = require('fs').readdirSync(require('path').resolve(__dirname, './commands')).filter(file => file.endsWith('.js')).map(file => require(require('path').resolve(__dirname, `./commands/${file}`)).data.toJSON());
 
 const rest = new REST({ version: '9' }).setToken(process.env.DISCORD_TOKEN);
 
