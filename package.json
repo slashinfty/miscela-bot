@@ -1,0 +1,27 @@
+{
+  "name": "miscela-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/slashinfty/miscela-bot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/slashinfty/miscela-bot/issues"
+  },
+  "homepage": "https://github.com/slashinfty/miscela-bot#readme",
+  "dependencies": {
+    "@discordjs/builders": "^0.8.2",
+    "@discordjs/rest": "^0.1.0-canary.0",
+    "discord-api-types": "^0.24.0",
+    "discord.js": "^13.3.0",
+    "dotenv": "^10.0.0",
+    "node-fetch": "^2.6.5"
+  }
+}
