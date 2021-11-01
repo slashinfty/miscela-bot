@@ -1,7 +1,7 @@
 const { Client, Collection, Intents } = require('discord.js');
 
 const dotenv = require('dotenv');
-dotenv.config();
+dotenv.config({ path: path.resolve(__dirname, './.env') });
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
