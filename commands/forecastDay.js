@@ -7,16 +7,16 @@ module.exports = {
 		.setDescription('Current forecast for a given day of the week')
 		.addStringOption(option => option.setName('day').setDescription('Enter a day of the week, or leave blank for today'))
 	,async execute(interaction) {
-		const day = interaction.options.getString('day').toLowerCase();
+		const day = interaction.options.getString('day');
 		const res = await fetch('https://api.weather.gov/gridpoints/LWX/110,94/forecast');
 		const data = await res.json();
 		const periods = data.properties.periods;
 		let response;
-		if (day === undefined) {
+		if (day === null) {
 			const filtered = periods.filter(p => !p.name.includes('day'));
 			response = filtered.reduce((a, b, i) => a += `${i === 0 ? '' : '\n'}${b.name}: ${b.detailedForecast}`, '');
 		} else {
-			const actualDay = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].find(d => d.toLowerCase().startsWith(day));
+			const actualDay = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].find(d => d.toLowerCase().startsWith(day.toLowerCase()));
 			const filtered = periods.filter(p => p.name.includes(actualDay));
 			response = filtered.reduce((a, b, i) => a += `${i === 0 ? '' : '\n'}${b.name}: ${b.detailedForecast}`, '');
 		}
