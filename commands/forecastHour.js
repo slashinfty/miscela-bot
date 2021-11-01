@@ -5,7 +5,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('forecasthour')
 		.setDescription('Forecast for the next N hours')
-		.addStringOption(option => option.setName('hours').setDescription('Enter a number of hours (up to 24)'))
+		.addStringOption(option => option.setName('hours').setDescription('Enter a number of hours (up to 24)').setRequired(true))
 	,async execute(interaction) {
 		let hours = parseInt(interaction.options.getString('hours'));
 		hours = hours > 24 ? 24 : hours;
