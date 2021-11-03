@@ -1,7 +1,20 @@
 const { Client, Collection, Intents } = require('discord.js');
+const { google } = require('googleapis');
 
 const dotenv = require('dotenv');
 dotenv.config({ path: require('path').resolve(__dirname, './.env') });
+
+const oauth2Client = new google.auth.OAuth2(
+	process.env.CLIENT_ID,
+	process.env.CLIENT_SECRET,
+	process.env.REDIRECT_URL
+)
+
+const googleTokens = JSON.parse(require('fs').readFileSync(require('path').resolve(__dirname, './googleTokens.json')));
+
+oauth2Client.setCredentials({
+ 	refresh_token: googleTokens.refresh_token
+});
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
@@ -26,11 +39,18 @@ client.on('interactionCreate', async interaction => {
 	if (!command) return;
 
     try {
-        await command.execute(interaction);
+        if (command.hasOwnProperty('google')) await command.execute(interaction, google, auth);
+        else await command.execute(interaction);
     } catch (error) {
         console.error(error);
         await interaction.reply({ content: 'Oops! Something went wrong.', ephemeral: true });
     }
+});
+
+oauth2Client.on('tokens', tokens => {
+	if (tokens.refresh_token) googleTokens.refresh_token = tokens.refresh_token;
+	googleTokens.access_token = tokens.access_token;
+	require('fs').writeFileSync(require('path').resolve(__dirname, './googleTokens.json'), JSON.stringify(googleTokens));
 });
 
 client.login(process.env.DISCORD_TOKEN);
