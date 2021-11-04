@@ -16,6 +16,8 @@ oauth2Client.setCredentials({
  	refresh_token: googleTokens.refresh_token
 });
 
+const calendar = google.calendar('v3');
+
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
 const commandPath = require('path').resolve(__dirname, './commands');
@@ -39,7 +41,7 @@ client.on('interactionCreate', async interaction => {
 	if (!command) return;
 
     try {
-        if (command.hasOwnProperty('google')) await command.execute(interaction, google, auth);
+        if (command.hasOwnProperty('google')) await command.execute(interaction, calendar);
         else await command.execute(interaction);
     } catch (error) {
         console.error(error);
