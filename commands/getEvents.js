@@ -30,7 +30,7 @@ module.exports = {
 		data.items.forEach((event, i) => {
 			if (i !== 0) response += '\n';
 			const date = new Date(event.start.dateTime);
-			response += `${date.getHours() % 12 === 0 ? 12 : date.getHours() % 12}:${(date.getMinutes() + '0').substr(-2)}${Math.floor(date.getHours() / 12) === 1 ? 'PM' : 'AM'} - ${event.summary}`
+			response += `${date.getHours() % 12 === 0 ? 12 : date.getHours() % 12}:${('0' + date.getMinutes()).substr(-2)}${Math.floor(date.getHours() / 12) === 1 ? 'PM' : 'AM'} - ${event.summary}`
 		});
 		if (response === '') response = 'No events scheduled.'
 		await interaction.reply(response);
