@@ -6,16 +6,22 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('getevents')
 		.setDescription('Get events for a specified day')
-		.addStringOption(option => option.setName('day').setDescription('Enter a date in the form YYYY-MM-DD'))
+		.addStringOption(option => option.setName('day').setDescription('Enter a date in the form MM/DD/YY'))
 	,async execute(interaction, calendar) {
 		const day = interaction.options.getString('day');
+		let dayObject;
+		if (day === null) dayObject = new Date(Date.now());
+		else {
+			const arr = day.split('/').map(e => parseInt(e));
+			dayObject = new Date(arr[2] + 2000, arr[0] - 1, arr[1]);
+		}
 		const dayObject = day === null ? new Date(Date.now()) : new Date(day);
 		const timeMax = new Date(dayObject.getFullYear(), dayObject.getMonth(), dayObject.getDate(), 23, 59, 59);
 		const timeMin = new Date(dayObject.getFullYear(), dayObject.getMonth(), dayObject.getDate());
 		const res = await calendar.events.list({
 			'calendarId': 'l2oakd1coc00sfckc361pcrv7g@group.calendar.google.com',
-			'timeMax': timeMax,
-			'timeMin': timeMin,
+			'timeMax': timestamp(timeMax),
+			'timeMin': timestamp(timeMin),
 			'orderBy': 'startTime',
 			'singleEvents': true
 		});
