@@ -15,7 +15,6 @@ module.exports = {
 			const arr = day.split('/').map(e => parseInt(e));
 			dayObject = new Date(arr[2] + 2000, arr[0] - 1, arr[1]);
 		}
-		const dayObject = day === null ? new Date(Date.now()) : new Date(day);
 		const timeMax = new Date(dayObject.getFullYear(), dayObject.getMonth(), dayObject.getDate(), 23, 59, 59);
 		const timeMin = new Date(dayObject.getFullYear(), dayObject.getMonth(), dayObject.getDate());
 		const res = await calendar.events.list({
