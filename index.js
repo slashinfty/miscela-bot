@@ -16,7 +16,10 @@ oauth2Client.setCredentials({
  	refresh_token: googleTokens.refresh_token
 });
 
-const calendar = google.calendar('v3');
+const calendar = google.calendar({
+	version: 'v3',
+	auth: oauth2Client
+});
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
