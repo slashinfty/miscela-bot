@@ -1,5 +1,6 @@
 const { Client, Collection, Intents } = require('discord.js');
 const { google } = require('googleapis');
+const CronJob = require('cron').CronJob;
 
 const dotenv = require('dotenv');
 dotenv.config({ path: require('path').resolve(__dirname, './.env') });
@@ -35,6 +36,9 @@ for (const file of commandFiles) {
 client.once('ready', () => {
 	console.log(`Miscela Bot is live @ ${new Date().toTimeString()} on ${new Date().toDateString()}`);
 });
+
+const job = require(require('path').resolve(__dirname, './job.js'));
+const daily = new CronJob('0 0 5 * * *', () => job(client, calendar), null, true);
 
 client.on('interactionCreate', async interaction => {
     if (!interaction.isCommand()) return;

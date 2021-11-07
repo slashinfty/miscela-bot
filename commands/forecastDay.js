@@ -13,7 +13,7 @@ module.exports = {
 		const periods = data.properties.periods;
 		let response;
 		if (day === null) {
-			const filtered = periods.filter(p => !p.name.includes('day'));
+			const filtered = periods.filter(p => !p.name.includes('day') && !p.name.includes('Day'));
 			response = filtered.reduce((a, b, i) => a += `${i === 0 ? '' : '\n'}${b.name}: ${b.detailedForecast}`, '');
 		} else {
 			const actualDay = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].find(d => d.toLowerCase().startsWith(day.toLowerCase()));
