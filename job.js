@@ -6,10 +6,10 @@ module.exports = async (client, calendar) => {
 	const res = await fetch('https://api.weather.gov/gridpoints/LWX/110,94/forecast');
 	const data = await res.json();
 	const periods = data.properties.periods;
-	const filtered = periods.filter(p => !p.name.includes('day') && !p.name.includes('Day'));
+	const today = new Date(Date.now());
+	const filtered = periods.filter(p => today.getDate() === (new Date(p.startTime)).getDate() && (new Date(p.startTime)).getHours() >= 6);
 	response += filtered.reduce((a, b, i) => a += `${i === 0 ? '' : '\n'}${b.name}: ${b.detailedForecast}`, '');
 	
-	const today = new Date(Date.now());
 	const timeMax = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 23, 59, 59);
 	const timeMin = new Date(today.getFullYear(), today.getMonth(), today.getDate());
 	const res_ = await calendar.events.list({
@@ -32,7 +32,7 @@ module.exports = async (client, calendar) => {
 			response +=  `${event.summary}`
 		});
 	}
-	
+
 	const channel = client.channels.cache.get('788520707293315075');
 	await channel.send(response);
 }
