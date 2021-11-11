@@ -60,6 +60,7 @@ oauth2Client.on('tokens', tokens => {
 	if (tokens.refresh_token) googleTokens.refresh_token = tokens.refresh_token;
 	googleTokens.access_token = tokens.access_token;
 	require('fs').writeFileSync(require('path').resolve(__dirname, './googleTokens.json'), JSON.stringify(googleTokens));
+	console.log(`Google tokens updated @ ${new Date().toTimeString()} on ${new Date().toDateString()}`);
 });
 
 client.login(process.env.DISCORD_TOKEN);
